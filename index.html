@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cute Notes ??</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff0f6;
+    color: #713b59;
+}
+
+header {
+    background: #f5b6d0;
+    padding: 25px;
+    text-align: center;
+}
+
+header h1 {
+    color: #a83269;
+    font-size: 30px;
+}
+
+nav {
+    background: #ead5ff;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+button {
+    border: none;
+    background: #e9a5c3;
+    color: white;
+    padding: 11px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #ce78a0;
+}
+
+nav button {
+    background: white;
+    color: #914b91;
+}
+
+.page {
+    display: none;
+    padding: 20px;
+    text-align: center;
+    min-height: 350px;
+}
+
+.page.active {
+    display: block;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    margin: 15px auto;
+    max-width: 550px;
+    border-radius: 18px;
+    box-shadow: 0 3px 10px #eac5d5;
+}
+
+.subjects {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    max-width: 650px;
+    margin: auto;
+}
+
+.subject {
+    background: white;
+    padding: 18px 8px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.subject:hover {
+    background: #fce0ed;
+}
+
+input, textarea, select {
+    width: 90%;
+    max-width: 450px;
+    padding: 12px;
+    margin: 8px;
+    border: 1px solid #e6b5ce;
+    border-radius: 10px;
+    font-family: Arial;
+}
+
+textarea {
+    min-height: 120px;
+}
+
+.note {
+    background: white;
+    padding: 18px;
+    margin: 15px auto;
+    max-width: 550px;
+    border-radius: 15px;
+    text-align: left;
+}
+
+.note h3 {
+    color: #bd5688;
+}
+
+.note-text {
+    white-space: pre-wrap;
+}
+
+.delete-btn {
+    background: #d66b83;
+}
+
+footer {
+    background: #f5b6d0;
+    padding: 18px;
+    text-align: center;
+}
+
+@media(max-width: 400px) {
+    .subjects {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>?? Cute Notes ??</h1>
+    <p>Learn • Write • Explore</p>
+    <p>Welcome to my little study world!</p>
+</header>
+
+<nav>
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('subjects')">Subjects</button>
+    <button onclick="showPage('notes')">My Notes</button>
+    <button onclick="showPage('admin')">Admin</button>
+</nav>
+
+<!-- HOME PAGE -->
+
+<section id="home" class="page active">
+
+    <div class="card">
+        <h2>Welcome to Cute Notes! ??</h2>
+        <p>Your little study world.</p>
+        <p>Find your favourite study notes here.</p>
+
+        <button onclick="showPage('subjects')">
+            Explore Subjects
+        </button>
+    </div>
+
+    <div class="card">
+        <h2>?? Happy Learning!</h2>
+        <p>Study hard and follow your dreams.</p>
+    </div>
+
+</section>
+
+<!-- SUBJECTS PAGE -->
+
+<section id="subjects" class="page">
+
+    <h2>?? Grade 7 Subjects</h2>
+    <p>Choose your favourite subject.</p>
+
+    <div class="subjects">
+
+        <div class="subject" onclick="selectSubject('Sinhala')">?? Sinhala</div>
+        <div class="subject" onclick="selectSubject('English')">?? English</div>
+        <div class="subject" onclick="selectSubject('Mathematics')">? Mathematics</div>
+        <div class="subject" onclick="selectSubject('Science')">?? Science</div>
+        <div class="subject" onclick="selectSubject('PTS')">?? PTS</div>
+        <div class="subject" onclick="selectSubject('ICT')">?? ICT</div>
+        <div class="subject" onclick="selectSubject('Geography')">?? Geography</div>
+        <div class="subject" onclick="selectSubject('Tamil')">??? Tamil</div>
+        <div class="subject" onclick="selectSubject('Health')">?? Health</div>
+        <div class="subject" onclick="selectSubject('Civic')">?? Civic</div>
+        <div class="subject" onclick="selectSubject('Dancing')">?? Dancing</div>
+        <div class="subject" onclick="selectSubject('History')">?? History</div>
+        <div class="subject" onclick="selectSubject('Buddhism')">?? Buddhism</div>
+
+    </div>
+
+</section>
+
+<!-- NOTES PAGE -->
+
+<section id="notes" class="page">
+
+    <h2>?? My Study Notes</h2>
+
+    <input
+        type="text"
+        id="search"
+        placeholder="Search your notes..."
+        oninput="displayNotes()">
+
+    <select id="filter" onchange="displayNotes()">
+        <option value="All">All Subjects</option>
+        <option>Sinhala</option>
+        <option>English</option>
+        <option>Mathematics</option>
+        <option>Science</option>
+        <option>PTS</option>
+        <option>ICT</option>
+        <option>Geography</option>
+        <option>Tamil</option>
+        <option>Health</option>
+        <option>Civic</option>
+        <option>Dancing</option>
+        <option>History</option>
+        <option>Buddhism</option>
+    </select>
+
+    <div id="notesList"></div>
+
+</section>
+
+<!-- ADMIN PAGE -->
+
+<section id="admin" class="page">
+
+    <h2>?? Admin Panel</h2>
+    <p>Add your own study notes here.</p>
+
+    <div class="card">
+
+        <h3>? Add New Note</h3>
+
+        <input
+            type="text"
+            id="noteTitle"
+            placeholder="Enter Note Title">
+
+        <br>
+
+        <select id="noteSubject">
+            <option value="">Select Subject</option>
+            <option>Sinhala</option>
+            <option>English</option>
+            <option>Mathematics</option>
+            <option>Science</option>
+            <option>PTS</option>
+            <option>ICT</option>
+            <option>Geography</option>
+            <option>Tamil</option>
+            <option>Health</option>
+            <option>Civic</option>
+            <option>Dancing</option>
+            <option>History</option>
+            <option>Buddhism</option>
+        </select>
+
+        <br>
+
+        <textarea
+            id="noteContent"
+            placeholder="Write your notes here..."></textarea>
+
+        <br>
+
+        <button onclick="addNote()">Save Note ??</button>
+
+        <p id="message"></p>
+
+    </div>
+
+</section>
+
+<footer>
+    <p>?? Cute Notes © 2026</p>
+    <p>Made with Love ??</p>
+</footer>
+
+<script>
+
+// PAGE NAVIGATION
+
+function showPage(pageName) {
+
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+
+    document.getElementById(pageName).classList.add('active');
+
+    if (pageName === 'notes') {
+        displayNotes();
+    }
+}
+
+// SAVE AND LOAD NOTES
+
+let notes = [];
+
+try {
+    notes = JSON.parse(localStorage.getItem('cuteNotes')) || [];
+    if (!Array.isArray(notes)) notes = [];
+} catch (error) {
+    notes = [];
+}
+
+function saveData() {
+    localStorage.setItem('cuteNotes', JSON.stringify(notes));
+}
+
+// ADD NEW NOTE
+
+function addNote() {
+
+    let title = document.getElementById('noteTitle').value.trim();
+
+    let subject = document.getElementById('noteSubject').value;
+
+    let content = document.getElementById('noteContent').value.trim();
+
+    if (title === "" || subject === "" || content === "") {
+
+        document.getElementById('message').textContent =
+            "Please fill all the details! ??";
+
+        return;
+    }
+
+    notes.push({
+        id: Date.now(),
+        title: title,
+        subject: subject,
+        content: content
+    });
+
+    saveData();
+
+    document.getElementById('noteTitle').value = "";
+    document.getElementById('noteSubject').value = "";
+    document.getElementById('noteContent').value = "";
+
+    document.getElementById('message').textContent =
+        "Note saved successfully! ??";
+
+    displayNotes();
+}
+
+// DISPLAY NOTES
+
+function displayNotes() {
+
+    let list = document.getElementById('notesList');
+
+    let search = document.getElementById('search').value.toLowerCase();
+
+    let filter = document.getElementById('filter').value;
+
+    list.innerHTML = "";
+
+    let filtered = notes.filter(note => {
+
+        let matchesSearch =
+            note.title.toLowerCase().includes(search) ||
+            note.content.toLowerCase().includes(search) ||
+            note.subject.toLowerCase().includes(search);
+
+        let matchesSubject =
+            filter === "All" || note.subject === filter;
+
+        return matchesSearch && matchesSubject;
+    });
+
+    if (filtered.length === 0) {
+        list.textContent = "No notes found. Add some notes! ??";
+        return;
+    }
+
+    filtered.forEach(note => {
+
+        let box = document.createElement('div');
+        box.className = 'note';
+
+        let heading = document.createElement('h3');
+        heading.textContent = note.title;
+
+        let subject = document.createElement('p');
+        subject.textContent = "?? " + note.subject;
+
+        let content = document.createElement('p');
+        content.className = 'note-text';
+        content.textContent = note.content;
+
+        let deleteButton = document.createElement('button');
+        deleteButton.className = 'delete-btn';
+        deleteButton.textContent = 'Delete';
+
+        deleteButton.onclick = function() {
+            deleteNote(note.id);
+        };
+
+        box.appendChild(heading);
+        box.appendChild(subject);
+        box.appendChild(content);
+        box.appendChild(deleteButton);
+
+        list.appendChild(box);
+    });
+}
+
+// SELECT SUBJECT
+
+function selectSubject(subject) {
+
+    showPage('notes');
+
+    document.getElementById('filter').value = subject;
+
+    displayNotes();
+}
+
+// DELETE NOTE
+
+function deleteNote(id) {
+
+    if (confirm("Are you sure you want to delete this note?")) {
+
+        notes = notes.filter(note => note.id !== id);
+
+        saveData();
+        displayNotes();
+    }
+}
+
+</script>
+
+</body>
+</html>
